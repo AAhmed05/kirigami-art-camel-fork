@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutoriel : Créer son Kirigami 3D</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fefaf0;
+            color: #2d2d2d;
+        }
+
+        .bg-shapes {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fefaf0 0%, #faedcd 100%);
+        }
+        .shape {
+            position: absolute;
+            filter: blur(90px);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        .shape-1 { width: 40vw; height: 40vw; background: #d4a373; top: -5%; left: -5%; }
+        .shape-2 { width: 30vw; height: 30vw; background: #e9edc9; bottom: 5%; right: -5%; }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(188, 108, 37, 0.05);
+        }
+
+        /* Style spécifique pour la Navbar Flottante */
+        #main-nav {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 100;
+            border-radius: 2rem;
+            transition: transform 0.1s ease-out; /* Pour un mouvement fluide vers la souris */
+        }
+
+        .step-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(188, 108, 37, 0.12);
+        }
+
+        .icon-box {
+            background: linear-gradient(135deg, #bc6c25, #d4a373);
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 12px;
+            color: white;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .software-tag {
+            display: inline-block;
+            padding: 2px 10px;
+            background: rgba(188, 108, 37, 0.1);
+            color: #bc6c25;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body class="pt-24"> <!-- Padding-top pour ne pas cacher le contenu sous la nav fixe -->
+
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <!-- Navigation Interactive qui suit le pointeur -->
+    <nav id="main-nav" class="glass px-8 py-4 flex justify-between items-center max-w-6xl mx-auto">
+        <a href="accueil.html" class="font-extrabold text-amber-900 tracking-tighter text-xl">🐪 KirigamiArt</a>
+        <a href="accueil.html" class="px-5 py-2 bg-white/50 rounded-full text-amber-800 text-sm font-bold hover:bg-white transition border border-white/50">← Retour à l'accueil</a>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto px-6 py-16 text-center">
+        <span class="text-amber-700 font-bold tracking-widest text-xs uppercase mb-4 block">Workflow Technique Complet</span>
+        <h1 class="text-5xl font-extrabold text-stone-900 leading-tight mb-6">Guide : Du Réel au <span class="text-amber-600">Papier</span></h1>
+        <p class="text-stone-600 text-lg">Suivez les étapes pour reproduire notre sculpture de dromadaire.</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 pb-24 space-y-12">
+
+        <!-- Étape 1 : Capture 3D -->
+        <section class="glass p-10 rounded-[2.5rem] step-card flex flex-col md:flex-row gap-10 items-center">
+            <div class="md:w-1/2">
+                <div class="icon-box">1</div>
+                <div class="mb-3">
+                    <span class="software-tag">Abound 3D</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Capture de l'Objet Réel</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    Utilisez l'application <strong>Abound 3D</strong> pour effectuer un scan complet de la peluche. Prenez des photos à 360° pour générer le maillage brut.
+                </p>
+            </div>
+            <div class="md:w-1/2 rounded-2xl overflow-hidden bg-stone-200">
+                <img src="./images/agisoft.png" alt="Scan initial" class="w-full h-64 object-contain">
+            </div>
+        </section>
+
+        <!-- Étape 2 : Nettoyage -->
+        <section class="glass p-10 rounded-[2.5rem] step-card flex flex-col md:flex-row-reverse gap-10 items-center">
+            <div class="md:w-1/2">
+                <div class="icon-box">2</div>
+                <div class="mb-3">
+                    <span class="software-tag">Meshlab</span>
+                    <span class="software-tag">Houdini</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Nettoyage & Réparation</h2>
+                <p class="text-stone-600 leading-relaxed mb-4">
+                    Passez par <strong>Meshlab</strong> pour supprimer les artefacts, puis par <strong>Houdini</strong> pour boucher les trous (workflow VDB).
+                </p>
+            </div>
+            <div class="md:w-1/2 rounded-2xl overflow-hidden">
+                <img src="./images/houdiniprogramming.png" class="w-full">
+            </div>
+        </section>
+
+        <!-- Étape 3 : Graphite -->
+        <section class="glass p-10 rounded-[2.5rem] step-card flex flex-col md:flex-row gap-10 items-center">
+            <div class="md:w-1/2">
+                <div class="icon-box">3</div>
+                <div class="mb-3">
+                    <span class="software-tag">Graphite</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Triangulation (Low-Poly)</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    Réduisez le maillage dans <strong>Graphite</strong> pour obtenir un nombre de facettes pliables (environ 150 triangles).
+                </p>
+            </div>
+            <div class="md:w-1/2 grid grid-cols-2 gap-2">
+                <img src="./images/graphite1.png" class="rounded-xl">
+                <img src="./images/graphite2.png" class="rounded-xl">
+            </div>
+        </section>
+
+        <!-- Étape 4 : Pepakura -->
+        <section class="glass p-10 rounded-[2.5rem] step-card flex flex-col md:flex-row-reverse gap-10 items-center">
+            <div class="md:w-1/2">
+                <div class="icon-box">4</div>
+                <div class="mb-3">
+                    <span class="software-tag">Pepakura Designer</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Le Patron 2D</h2>
+                <p class="text-stone-600 leading-relaxed mb-4">
+                    Dépliez le modèle dans <strong>Pepakura</strong>, répartissez les pièces et ajoutez les languettes.
+                </p>
+            </div>
+            <div class="md:w-1/2 rounded-2xl overflow-hidden">
+                <img src="./images/pepakura2.png" class="w-full">
+            </div>
+        </section>
+
+        <!-- Étape 5 : Réel -->
+        <section class="glass p-10 rounded-[2.5rem] step-card flex flex-col md:flex-row gap-10 items-center">
+            <div class="md:w-1/2">
+                <div class="icon-box">5</div>
+                <div class="mb-3">
+                    <span class="software-tag">Imprimante</span>
+                    <span class="software-tag">Cutter</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-4">Assemblage Final</h2>
+                <p class="text-stone-600 leading-relaxed">
+                    Imprimez sur papier 180g, découpez et collez chaque facette avec soin.
+                </p>
+            </div>
+            <div class="md:w-1/2 grid grid-cols-2 gap-2">
+                <img src="./images/assemblage00.jpg" class="rounded-xl">
+                <img src="./images/assemblage4.jpg" class="rounded-xl">
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-12 border-t border-amber-200/30">
+        <p class="text-amber-900 font-bold">Projet Réalisé par Ahmed ABDOU & Mahamoud TOURE</p>
+    </footer>
+
+    <script>
+
+    </script>
+</body>
+</html>
